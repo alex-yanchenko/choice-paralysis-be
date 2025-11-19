@@ -4,19 +4,19 @@ Backend API for Choice Paralysis application.
 
 ## Requirements
 
-- Python >= 3.13
-- Poetry
+- Python >= 3.14
+- [uv](https://github.com/astral-sh/uv) (install with: `curl -LsSf https://astral.sh/uv/install.sh | sh`)
 
 ## Setup
 
 ```bash
-poetry install
+uv sync
 ```
 
 ## Running
 
 ```bash
-poetry run start
+uv run start
 ```
 
 The API will be available at `http://0.0.0.0:8000`.
@@ -24,11 +24,11 @@ The API will be available at `http://0.0.0.0:8000`.
 ## Development
 
 ```bash
-# Install dev dependencies
-poetry install --with dev
+# Install dev dependencies (included by default)
+uv sync
 
 # Run linter
-poetry run ruff check .
+uv run ruff check .
 ```
 
 ## Project Structure
@@ -42,4 +42,3 @@ choice_paralysis/
     main.py         # FastAPI application entry point
     config.py       # Configuration settings
 ```
-

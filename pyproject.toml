@@ -6,7 +6,7 @@ authors = [
     {name = "Alex Yanchenko", email = "oleksandr.yanchenko.ca@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 dependencies = [
     "fastapi[standard] (>=0.121.2,<0.122.0)",
     "pydantic-settings (>=2.12.0,<3.0.0)",
@@ -15,6 +15,7 @@ dependencies = [
     "asyncpg (>=0.30.0,<0.31.0)",
     "pgvector (>=0.4.1,<0.5.0)",
     "uvicorn (>=0.38.0,<0.39.0)",
+    "greenlet>=3.2.4",
 ]
 
 [project.scripts]
@@ -22,8 +23,11 @@ start = "choice_paralysis.src.main:start"
 
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["choice_paralysis"]
 
 [dependency-groups]
 dev = [
@@ -32,7 +36,7 @@ dev = [
 
 [tool.ruff]
 line-length = 110
-target-version = "py313"
+target-version = "py314"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
