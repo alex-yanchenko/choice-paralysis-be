@@ -7,7 +7,7 @@ from choice_paralysis.src.config import settings
 from choice_paralysis.src.infrastructure.env import Environment
 
 
-def setup_logging() -> structlog.BoundLogger:
+def setup_logging() -> None:
     shared_processors = [
         structlog.contextvars.merge_contextvars,
         structlog.stdlib.add_logger_name,
@@ -26,7 +26,7 @@ def setup_logging() -> structlog.BoundLogger:
     )
 
     structlog.configure(
-        processors=shared_processors + [renderer],
+        processors=[*shared_processors, renderer],
         logger_factory=structlog.stdlib.LoggerFactory(),
         wrapper_class=structlog.stdlib.BoundLogger,
         cache_logger_on_first_use=True,
@@ -36,7 +36,7 @@ def setup_logging() -> structlog.BoundLogger:
 
     formatter = structlog.stdlib.ProcessorFormatter(
         processor=renderer,
-        foreign_pre_chain=[structlog.stdlib.ExtraAdder()] + shared_processors,
+        foreign_pre_chain=[structlog.stdlib.ExtraAdder(), *shared_processors],
     )
 
     handler.setFormatter(formatter)

@@ -1,4 +1,4 @@
-from collections.abc import AsyncGenerator
+from typing import TYPE_CHECKING
 
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
@@ -6,17 +6,25 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from choice_paralysis.src.config import settings
 from choice_paralysis.src.infrastructure.env import Environment
 
+if TYPE_CHECKING:
+    from collections.abc import AsyncGenerator
+
 engine = create_async_engine(
-    settings.SQLALCHEMY_DATABASE_URL, echo=settings.ENVIRONMENT == Environment.DEV, future=True
+    settings.SQLALCHEMY_DATABASE_URL,
+    echo=settings.ENVIRONMENT == Environment.DEV,
+    future=True,
 )
 
 AsyncSessionLocal = async_sessionmaker[AsyncSession](
-    bind=engine, class_=AsyncSession, expire_on_commit=False, autoflush=False
+    bind=engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+    autoflush=False,
 )
 
 
 async def get_db() -> AsyncGenerator[AsyncSession]:
-    async with AsyncSessionLocal as session:
+    async with AsyncSessionLocal() as session:
         try:
             yield session
         finally:
