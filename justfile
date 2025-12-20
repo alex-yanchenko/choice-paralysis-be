@@ -12,7 +12,7 @@ typecheck:
 		uv run ty check
 
 start:
-		uv run start
+		echo "does not work right now"
 
 lint:
 		uv run ruff check .
